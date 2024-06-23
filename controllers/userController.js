@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Thought = require('../models/Thought');  
 // const User = require('../models/User');
 const dayjs = require('dayjs');
 
@@ -61,7 +62,7 @@ module.exports = {
       }
     //  Remove user's associated thoughts 
       await Thought.deleteMany({ username: deletedUser.username });
-      // res.json({ message: 'User and associated thoughts deleted' });
+      res.json({ message: 'User and associated thoughts deleted' });
     } catch (err) {
       console.error(err);
       res.status(400).json(err);
