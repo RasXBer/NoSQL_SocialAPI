@@ -104,6 +104,33 @@ module.exports = {
       console.error(err);
       res.status(400).json(err);
     }
+  },
+
+  deleteReaction: async (req, res) => {
+    try {
+      const { thoughtId, reactionId } = req.params;
+  
+      // Check if the thought exists
+      const thought = await Thought.findById(thoughtId);
+      if (!thought) {
+        return res.status(400).json({ message: 'Thought not found' });
+      }
+  
+      // Check if the reaction exists
+      const reaction = await Reaction.findById(reactionId);
+      if (!reaction) {
+        return res.status(404).json({ message: 'Reaction not found' });
+      }
+  
+      // Remove the reaction from the thought
+      await thought.removeReaction(reactionId);
+  
+      res.status(200).json({ message: 'Reaction deleted successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ message: 'Error' });
+    }
   }
+
 };
 

@@ -29,6 +29,12 @@ thoughtSchema.virtual('reactionCount').get(function() {
   return this.reactions.length;
 });
 
+// Method to remove a reaction from a thought
+thoughtSchema.methods.removeReaction = async function(reactionId) {
+  this.reactions.pull(reactionId);
+  await this.save();
+};
+
 const Thought = mongoose.model('Thought', thoughtSchema);
 
 module.exports = Thought;
